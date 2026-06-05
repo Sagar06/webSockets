@@ -22,6 +22,8 @@ webServer.on("connection", (websocket) => {
   //print when FT sends some message
   websocket.on("message", (data) => {
     console.log(`WebSocket Message Recieved `, data.toString());
+
+    websocket.send('hello from the server') //response to the client
   });
 });
 

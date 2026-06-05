@@ -22,8 +22,13 @@ webServer.on("connection", (websocket) => {
   //print when FT sends some message
   websocket.on("message", (data) => {
     console.log(`WebSocket Message Recieved `, data.toString());
+    // websocket.send('hello from the server') //response to the client
 
-    websocket.send('hello from the server') //response to the client
+    //chatApp
+    // websocket.send(data.toString()); // resond to connection, this response to only the connection one client
+    webServer.clients.forEach((client) => {
+      client.send(data.toString()); //this broadcast messages  to all clients connected
+    });
   });
 });
 

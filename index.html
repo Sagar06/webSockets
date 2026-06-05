@@ -7,14 +7,35 @@
   </head>
   <body>
     <h1>WeSocket Server Demo</h1>
+    <div>
+      <input type="text" placeholder="Enter your message" id="message-input" />
+      <button id="mesage-send-button">Send</button>
+      <!-- //user enter message and
+      gives to web socket server and it distributes -->
+      <ul id="message-container"></ul>
+    </div>
     <script>
+      //DOM Elements
+      const messageInput = document.getElementById("message-input");
+      const messageSendButton = document.getElementById("mesage-send-button");
+      const mesagesContainer = document.getElementById("message-container");
+
       const { port } = window.location;
       const connection = new WebSocket(`ws://localhost:${port}`); //creating websocket connection
       connection.onopen = () => {
-        connection.send("ping hello from the client...");
+        // // connection.send("ping hello from the client...");
+        // // connection.onmessage = (message) => {
+        // //   console.log(message); //handle response from server
+        // };
+        //chat-App
         connection.onmessage = (message) => {
-          console.log(message); //handle response from server
-        };
+          console.log(`Message Rec: `, message);
+        }; //handle message
+        messageSendButton.addEventListener("click", (ev) => {
+          //take input from user
+          const value = messageInput.value;
+          connection.send(JSON.stringify({ message: value })); //send to backend for connection(webSocket connection)
+        });
       };
     </script>
   </body>

@@ -30,6 +30,13 @@
         //chat-App
         connection.onmessage = (message) => {
           console.log(`Message Rec: `, message);
+          const rawData = message.data;
+          const parsedData = JSON.parse(rawData);
+          const text = parsedData.message;
+
+          const li = document.createElement("li");
+          li.innerText = text; //message from backend
+          mesagesContainer.appendChild(li); //DOM on frontend
         }; //handle message
         messageSendButton.addEventListener("click", (ev) => {
           //take input from user
